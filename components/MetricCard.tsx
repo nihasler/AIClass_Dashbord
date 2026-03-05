@@ -66,7 +66,7 @@ export default function MetricCard({
     <div
       className="relative overflow-hidden rounded-2xl border border-white/[0.06] bg-[#0d1117] p-6 transition-all duration-200 hover:-translate-y-0.5"
       style={{
-        boxShadow: `0 4px 24px -4px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(255,255,255,0.04), ${accent.glow}`,
+        boxShadow: `0 8px 40px -4px rgba(0,0,0,0.85), 0 2px 12px -2px rgba(0,0,0,0.7), 0 0 0 0.5px rgba(255,255,255,0.04), ${accent.glow}`,
       }}
     >
       {/* Subtle top gradient */}

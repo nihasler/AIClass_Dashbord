@@ -45,7 +45,7 @@ export default function RevenueChart() {
   return (
     <div
       className="rounded-2xl border border-white/[0.06] bg-[#0d1117] p-6"
-      style={{ boxShadow: "0 4px 24px -4px rgba(0,0,0,0.5), 0 0 0 0.5px rgba(255,255,255,0.04)" }}
+      style={{ boxShadow: "0 8px 40px -4px rgba(0,0,0,0.85), 0 2px 12px -2px rgba(0,0,0,0.7), 0 0 0 0.5px rgba(255,255,255,0.04)" }}
     >
       {/* Header */}
       <div className="flex items-start justify-between">
