@@ -1,65 +1,121 @@
-import Image from "next/image";
+import {
+  DollarSign,
+  Users,
+  TrendingUp,
+  Sparkles,
+} from "lucide-react";
+import MetricCard from "@/components/MetricCard";
+import RevenueChart from "@/components/RevenueChart";
+import { monthlyRevenue, weeklyUsers } from "@/lib/data";
 
-export default function Home() {
+const revenueSparkline = monthlyRevenue.map((d) => d.revenue);
+const usersSparkline = weeklyUsers.map((d) => d.users);
+
+// Month-over-month growth rate derived from revenue data
+const growthSparkline = monthlyRevenue
+  .slice(1)
+  .map((d, i) =>
+    parseFloat(
+      (((d.revenue - monthlyRevenue[i].revenue) / monthlyRevenue[i].revenue) * 100).toFixed(2)
+    )
+  );
+
+// AI insights activity index (session quality score per week, derived from users trend)
+const aiInsightsSparkline = weeklyUsers.map((d, i, arr) =>
+  i === 0 ? 60 : Math.round(60 + ((d.users - arr[0].users) / arr[0].users) * 100)
+);
+
+const cards = [
+  {
+    title: "Total Revenue",
+    value: "SAR 284,500",
+    change: "+12.5%",
+    trend: "up" as const,
+    period: "vs last month",
+    icon: DollarSign,
+    sparklineData: revenueSparkline,
+    accent: {
+      bg: "bg-emerald-500/10",
+      icon: "text-emerald-400",
+      glow: "0 8px 32px -8px rgba(16,185,129,0.15)",
+      spark: "#10b981",
+      badge: "bg-emerald-500/15",
+      badgeText: "text-emerald-400",
+    },
+  },
+  {
+    title: "Active Users",
+    value: "1,847",
+    change: "+8.2%",
+    trend: "up" as const,
+    period: "vs last month",
+    icon: Users,
+    sparklineData: usersSparkline,
+    accent: {
+      bg: "bg-blue-500/10",
+      icon: "text-blue-400",
+      glow: "0 8px 32px -8px rgba(59,130,246,0.15)",
+      spark: "#3b82f6",
+      badge: "bg-blue-500/15",
+      badgeText: "text-blue-400",
+    },
+  },
+  {
+    title: "Growth Rate",
+    value: "15.3%",
+    change: "+2.1%",
+    trend: "up" as const,
+    period: "vs last quarter",
+    icon: TrendingUp,
+    sparklineData: growthSparkline,
+    accent: {
+      bg: "bg-indigo-500/10",
+      icon: "text-indigo-400",
+      glow: "0 8px 32px -8px rgba(99,102,241,0.15)",
+      spark: "#6366f1",
+      badge: "bg-indigo-500/15",
+      badgeText: "text-indigo-400",
+    },
+  },
+  {
+    title: "AI Insights",
+    value: "18 Generated",
+    change: "+6 new",
+    trend: "up" as const,
+    period: "this week",
+    icon: Sparkles,
+    sparklineData: aiInsightsSparkline,
+    accent: {
+      bg: "bg-violet-500/10",
+      icon: "text-violet-400",
+      glow: "0 8px 32px -8px rgba(139,92,246,0.15)",
+      spark: "#a78bfa",
+      badge: "bg-violet-500/15",
+      badgeText: "text-violet-400",
+    },
+  },
+];
+
+export default function DashboardPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="p-8">
+      <div className="mb-8">
+        <h1 className="text-2xl font-semibold text-white tracking-tight">Dashboard</h1>
+        <p className="mt-1 text-sm text-slate-500">
+          Last updated Feb 2026 · All figures in SAR
+        </p>
+      </div>
+
+      {/* Metric cards */}
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {cards.map((card) => (
+          <MetricCard key={card.title} {...card} />
+        ))}
+      </div>
+
+      <div className="mt-6">
+        <RevenueChart />
+      </div>
     </div>
   );
 }
