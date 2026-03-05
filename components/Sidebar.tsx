@@ -8,12 +8,14 @@ import {
   FileText,
   Settings,
   Zap,
+  PlusCircle,
 } from "lucide-react";
 
 const navItems = [
   { label: "Dashboard", href: "/", icon: LayoutDashboard },
   { label: "Analytics", href: "/analytics", icon: BarChart2 },
   { label: "Reports", href: "/reports", icon: FileText },
+  { label: "Add Sale", href: "/add-sale", icon: PlusCircle },
 ];
 
 const bottomItems = [
